@@ -31,7 +31,7 @@ def fetch_pnr_status(pnr):
         status_blocks = driver.find_elements(By.CSS_SELECTOR, ".p-20.bg-white.rounded-10.mt-30")
 
         if status_blocks:
-            full_message = f"<b>📌 PNR Status for {pnr}</b>\n\n"
+            full_message = f"<b>📌 Current PNR Status for PNR: {pnr}</b>\n\n"
             for block in status_blocks:
                 print(block.text)
                 full_message += block.text + "\n\n"
