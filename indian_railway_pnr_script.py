@@ -1,4 +1,3 @@
-import asyncio
 import os
 import time
 from selenium import webdriver 
@@ -6,12 +5,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from telegram import Bot
 
-TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
-CHAT_ID = os.getenv('CHAT_ID')
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
 
-async def send_to_telegram(message):
+def send_to_telegram(message):
     bot = Bot(token=TELEGRAM_TOKEN)
-    await bot.send_message(chat_id=CHAT_ID, text=message)
+    bot.send_message(chat_id=CHAT_ID, text=message, parse_mode='HTML')
 
 def fetch_pnr_status(pnr):
     options = Options()
@@ -32,16 +31,15 @@ def fetch_pnr_status(pnr):
         status_blocks = driver.find_elements(By.CSS_SELECTOR, ".p-20.bg-white.rounded-10.mt-30")
 
         if status_blocks:
-            full_message = f"📌 Current PNR Status for PNR:{pnr}\n\n"
+            full_message = f"<b>📌 PNR Status for {pnr}</b>\n\n"
             for block in status_blocks:
                 print(block.text)
                 full_message += block.text + "\n\n"
-            # Send to Telegram
-            asyncio.run(send_to_telegram(full_message))
+            send_to_telegram(full_message)
         else:
-            message = f"PNR: {pnr}\nNo status found or still loading."
+            message = f"PNR: {pnr}\n❌ No status found or still loading."
             print(message)
-            asyncio.run(send_to_telegram(message))
+            send_to_telegram(message)
 
     finally:
         driver.quit()
