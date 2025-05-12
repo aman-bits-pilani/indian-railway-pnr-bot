@@ -1,4 +1,4 @@
-name: Gold Price Bot
+name: Indian Railway PNR Bot
 
 on:
   schedule:
