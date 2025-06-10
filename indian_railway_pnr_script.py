@@ -45,6 +45,7 @@ def fetch_pnr_status(pnr):
         driver.quit()
 
 # Example usage
-pnrs = ["2135012418", "2715707015", "2663243998", "2715704719"]
+# pnrs = ["2135012418", "2715707015", "2663243998", "2715704719"]
+pnrs = ["2135012418"]
 for pnr in pnrs:
     fetch_pnr_status(pnr)
